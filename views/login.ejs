@@ -1,0 +1,62 @@
+<html>
+    <head>
+            <script src="https://apis.google.com/js/platform.js" async defer></script>
+           
+           <meta name="google-signin-client_id" content="990512942243-jdipb2hm21tlrll402aaui2ul75bocie.apps.googleusercontent.com">
+          
+    </head>
+    <body>
+        <h1>Login</h1>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+       
+        
+   <a href="#" onclick="logout();">Sign out</a>
+   <script>
+       function show(){
+           console.log(true);
+       }
+       function onSignIn(googleUser) 
+{
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); 
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail());
+  
+  var myUserEntity = {};
+  myUserEntity.Id = profile.getId();
+  myUserEntity.Name = profile.getName();
+  
+  //Store the entity object in sessionStorage where it will be accessible from all pages of your site.
+  sessionStorage.setItem('myUserEntity',JSON.stringify(myUserEntity));
+
+  alert(profile.getName());   
+}
+
+function checkIfLoggedIn()
+{
+  if(sessionStorage.getItem('myUserEntity') == null){
+    //Redirect to login page, no user entity available in sessionStorage
+    window.location.href='/';
+  } else {
+    //User already logged in
+    var userEntity = {};
+    userEntity = JSON.parse(sessionStorage.getItem('myUserEntity'));
+    show();
+  }
+}
+
+function logout()
+{
+  //Don't forget to clear sessionStorage when user logs out
+  var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+        });
+
+  sessionStorage.clear();
+}
+   </script>
+  
+    </body>
+</html>
