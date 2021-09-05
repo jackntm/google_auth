@@ -3,15 +3,57 @@
             <script src="https://apis.google.com/js/platform.js" async defer></script>
            
            <meta name="google-signin-client_id" content="990512942243-jdipb2hm21tlrll402aaui2ul75bocie.apps.googleusercontent.com">
-          
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+   
+           <link rel="stylesheet" href="/style.css">
+          <script>
+
+
+
+              $(window).load(function() {
+       // Animate loader off screen
+       $(".lds-ripple").fadeOut("slow");;
+     });
+           $(window).ready(function(){
+               $('.ll').show('slow');
+           })
+          </script>
     </head>
     <body>
-        <h1>Login</h1>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <div   class="change">
+        <div class="blur">
+          <div class="ll">
+            <div id="lg"  class="g-signin2" data-onsuccess="onSignIn" onclick="cl()"></div>
+            <div id="sg"></div>
+          </div>
+        </div>
+    </div>
+<script>
+    if(sessionStorage.getItem('myUserEntity') == null){
+    //Redirect to login page, no user entity available in sessionStorage
+  } else {
+    //User already logged in
+    var userEntity = {};
+    userEntity = JSON.parse(sessionStorage.getItem('myUserEntity'));
+    jQuery('#sg').replaceWith('<a href="#" onclick="logout();">Sign out</a>');
+    $('#lg').css("display","none")
+  }
+</script>
+    <div style="  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  " class="lds-ripple"><div></div><div></div></div>
+    
        
         
-   <a href="#" onclick="logout();">Sign out</a>
    <script>
+     var dem=0;
+     function cl(){
+       dem=dem+1;
+     }
        function show(){
            console.log(true);
        }
@@ -30,21 +72,13 @@
   //Store the entity object in sessionStorage where it will be accessible from all pages of your site.
   sessionStorage.setItem('myUserEntity',JSON.stringify(myUserEntity));
 
-  alert(profile.getName());   
-}
 
-function checkIfLoggedIn()
-{
-  if(sessionStorage.getItem('myUserEntity') == null){
-    //Redirect to login page, no user entity available in sessionStorage
-    window.location.href='/';
-  } else {
-    //User already logged in
-    var userEntity = {};
-    userEntity = JSON.parse(sessionStorage.getItem('myUserEntity'));
-    show();
+  if(dem>0){
+    window.location = "/"
   }
 }
+
+
 
 function logout()
 {
@@ -52,11 +86,14 @@ function logout()
   var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
         console.log('User signed out.');
+        window.location = "/"
         });
 
   sessionStorage.clear();
 }
+
    </script>
-  
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
     </body>
 </html>
