@@ -24,8 +24,8 @@
     <body>
       <div   class="change">
         <div class="blur">
-          <div class="ll">
-            <div id="lg"  class="g-signin2" data-onsuccess="onSignIn" onclick="cl()"></div>
+          <div style="border-radius: 20px;" class="ll">
+            <div  id="lg"  class="g-signin2" data-onsuccess="onSignIn" onclick="cl()"></div>
             <div id="sg"></div>
           </div>
         </div>
@@ -37,7 +37,7 @@
     //User already logged in
     var userEntity = {};
     userEntity = JSON.parse(sessionStorage.getItem('myUserEntity'));
-    jQuery('#sg').replaceWith('<a href="#" onclick="logout();">Sign out</a>');
+    jQuery('#sg').replaceWith('<div style="height:30px; width:70px" class="abcRioButtonLightBlue abcRioButton abcRioButtonContentWrapper" href="#" onclick="logout();">Sign out</div>');
     $('#lg').css("display","none")
   }
 </script>
