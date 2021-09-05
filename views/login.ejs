@@ -25,6 +25,7 @@
       <div   class="change">
         <div class="blur">
           <div style="border-radius: 20px;" class="ll">
+              <h1 id="user">Hello <span id="nameuser"></span>-sama</h1>
             <div  id="lg"  class="g-signin2" data-onsuccess="onSignIn" onclick="cl()"></div>
             <div id="sg"></div>
           </div>
@@ -33,8 +34,11 @@
 <script>
     if(sessionStorage.getItem('myUserEntity') == null){
     //Redirect to login page, no user entity available in sessionStorage
+    $("#user").css("display","none");
   } else {
     //User already logged in
+  
+  
     var userEntity = {};
     userEntity = JSON.parse(sessionStorage.getItem('myUserEntity'));
     jQuery('#sg').replaceWith('<div style="height:30px; width:70px" class="abcRioButtonLightBlue abcRioButton abcRioButtonContentWrapper" href="#" onclick="logout();">Sign out</div>');
@@ -68,7 +72,8 @@
   var myUserEntity = {};
   myUserEntity.Id = profile.getId();
   myUserEntity.Name = profile.getName();
-  
+  document.getElementById("nameuser").innerHTML = myUserEntity.Name;
+
   //Store the entity object in sessionStorage where it will be accessible from all pages of your site.
   sessionStorage.setItem('myUserEntity',JSON.stringify(myUserEntity));
 
